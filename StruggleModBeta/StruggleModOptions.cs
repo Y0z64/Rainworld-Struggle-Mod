@@ -8,46 +8,44 @@ namespace StruggleMod;
 public class StruggleModOptions : OptionInterface
 {
     private readonly ManualLogSource Logger;
+    
+    //initialize slider and config for struggle value
+    private OpSlider struggle_slider;
+
+    public static Configurable<int> struggle_configurable;
 
     public StruggleModOptions(StruggleMod modInstance, ManualLogSource loggerSource)
     {
         Logger = loggerSource;
-        PlayerSpeed = this.config.Bind<float>("PlayerSpeed", 1f, new ConfigAcceptableRange<float>(0f, 100f));
+        instance = this;
+        struggle_configurable = config.Bind("struggle_slider", 25, new ConfigurableInfo("", null, ""));
     }
 
-    public readonly Configurable<float> PlayerSpeed;
-    private UIelement[] UIArrPlayerOptions;
-    
-    
     public override void Initialize()
     {
-        var opTab = new OpTab(this, "Options");
-        this.Tabs = new[]
+        Logger.Log("Struggle Options menu initialize");
+        base.Ininialize();
+        Tabs = new OpTab[1]
         {
-            opTab
+            new OpTab(this, "Overview")
         };
 
-        UIArrPlayerOptions = new UIelement[]
-        {
-            new OpLabel(10f, 550f, "Options", true),
-            new OpLabel(10f, 520f, "Player run speed factor"),
-            new OpUpdown(PlayerSpeed, new Vector2(10f,490f), 100f, 1),
-            
-            new OpLabel(10f, 460f, "Gotta go fast!", false){ color = new Color(0.2f, 0.5f, 0.8f) }
+        OpLabel struggle_label = new OpLabel(new Vector2(300f, 500f), new Vector2(1f, 1f), "Inputs until free", FLabelAlignment.Center, true);
+
+        struggle_slider = new OpSlider(struggle_configurable, new Vector2(250f, 470f), 100){
+            description = "Number of inputs before you break free."
         };
-        opTab.AddItems(UIArrPlayerOptions);
+
+        struggle_slider.min = 0;
+        struggle_slider.max = 100;
+
+        Tabs[0].AddItems(struggle_label, struggle_configurable);
     }
 
     public override void Update()
     {
-        if (((OpUpdown)UIArrPlayerOptions[2]).GetValueFloat() > 10)
-        {
-            ((OpLabel)UIArrPlayerOptions[3]).Show();
-        }
-        else
-        {
-            ((OpLabel)UIArrPlayerOptions[3]).Hide();
-        }
+        //Directly call the base Update() function, since there where no modifications to it
+        base.Update();
     }
 
 }

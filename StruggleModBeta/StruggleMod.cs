@@ -16,13 +16,16 @@ using Debug = UnityEngine.Debug;
 
 namespace StruggleMod;
 
-[BepInPlugin("Y0z64.StruggleMod", "Struggle Mod", "1.0.0")]
-public partial class StruggleMod : BaseUnityPlugin
+[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.1")]
+public class StruggleMod : BaseUnityPlugin
 {
     private StruggleModOptions Options;
 
-    public StruggleMod()
+    private int struggleValue = 0;
+    private void OnEnable()
     {
+        // All hooks go here
+        // Atempt to start Options screen
         try
         {
             Options = new StruggleModOptions(this, Logger);
@@ -32,55 +35,31 @@ public partial class StruggleMod : BaseUnityPlugin
             Logger.LogError(ex);
             throw;
         }
-    }
-    private void OnEnable()
-    {
         On.RainWorld.OnModsInit += RainWorldOnOnModsInit;
+        On.Player.Update += PlayerStruggleHook;
     }
-
-    private bool IsInit;
     private void RainWorldOnOnModsInit(On.RainWorld.orig_OnModsInit orig, RainWorld self)
     {
+        // Register Options screen
         orig(self);
-        try
-        {
-            if (IsInit) return;
-
-            //Your hooks go here
-            On.Player.ctor += PlayerOnctor;
-
-            On.RainWorldGame.ShutDownProcess += RainWorldGameOnShutDownProcess;
-            On.GameSession.ctor += GameSessionOnctor;
-            
-            MachineConnector.SetRegisteredOI("Y0z64.StruggleMod", Options);
-            IsInit = true;
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex);
-            throw;
-        }
+        MachineConnector.SetRegisteredOI("Y0z64.strugglemod", Options);
     }
+
+    private void PlayerStruggleHook(On.Player.orig_Update orig, Player self, bool eu)
+    {
+        orig(self, eu);
+        if(Input.anyKeyDown && self.grabbedBy.Count > 0 && !(self.grabbedBy[0].grabber is Player) && !self.dead)
+        {
+            int releaseValue = 30; // TODO: Add here Option value
+            if(struggleValue < releaseValue)
+            {
+                struggleValue++;
+                return;
+            }
+            // TODO: Add debug Logs here if needed
+            self.grabbedBy[0].grabber.Violence(null, Custom.DirVec(self.firstChunk.pos, self.grabbedBy[0].grabber.bodyChunks[0].pos) * 50f, self.grabbedBy[0].grabber.bodyChunks[0], null, Creature.DamageType.Blunt, 0.2f, 130f * Mathf.Lerp(self.grabbedBy[0].grabber.Template.baseStunResistance, 1f, 0.5f));
+            self.grabbedBy[0].Release();
+        }
+    }   
     
-    private void RainWorldGameOnShutDownProcess(On.RainWorldGame.orig_ShutDownProcess orig, RainWorldGame self)
-    {
-        orig(self);
-        ClearMemory();
-    }
-    private void GameSessionOnctor(On.GameSession.orig_ctor orig, GameSession self, RainWorldGame game)
-    {
-        orig(self, game);
-        ClearMemory();
-    }
-
-    #region Helper Methods
-
-    private void ClearMemory()
-    {
-        //If you have any collections (lists, dictionaries, etc.)
-        //Clear them here to prevent a memory leak
-        //YourList.Clear();
-    }
-
-    #endregion
 }
