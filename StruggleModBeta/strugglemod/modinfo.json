@@ -3,8 +3,8 @@
   "name": "Struggle Mod",
   "version": "0.9",
   "authors": "Y0z64",
-  "description": "Struggle out of grabs",
-  "requirements": [],
-  "requirements_names": [],
+  "description": "Allows to struggle out of creature grabs by spaming inputs \n Alternative of HPbar's struggle without the extra mechanics",
+  "requirements": ["moreslugcats", "rwremix"],
+  "requirements_names": ["More Slugcats Expansion", "Rain World Remix"],
   "checksum_override_version": true
 }
