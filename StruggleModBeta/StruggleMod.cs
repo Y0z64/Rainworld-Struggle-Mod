@@ -61,7 +61,7 @@ public class StruggleMod : BaseUnityPlugin
             }
             // TODO: Add debug Logs here if needed
             struggleValue = 0;
-            self.grabbedBy[0].grabber.Violence(null, (Custom.DirVec(self.firstChunk.pos, self.grabbedBy[0].grabber.bodyChunks[0].pos) * 10f) * StruggleModOptions.knockback_configurable.Value, self.grabbedBy[0].grabber.bodyChunks[0], null, Creature.DamageType.Blunt, 0.2f, 130f * Mathf.Lerp(self.grabbedBy[0].grabber.Template.baseStunResistance, 1f, 0.5f));
+            self.grabbedBy[0].grabber.Violence(null, (Custom.DirVec(self.firstChunk.pos, self.grabbedBy[0].grabber.bodyChunks[0].pos) * 10f * StruggleModOptions.knockback_configurable.Value), self.grabbedBy[0].grabber.bodyChunks[0], null, Creature.DamageType.Blunt, 0.2f, 130f * Mathf.Lerp(self.grabbedBy[0].grabber.Template.baseStunResistance, 1f, 0.5f));
             self.grabbedBy[0].Release();
         }
     }   

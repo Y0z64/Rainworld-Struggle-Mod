@@ -65,7 +65,7 @@ public class StruggleModOptions : OptionInterface
         struggle_slider.min = 0;
         struggle_slider.max = 100;
         knockback_slider.min = 1;
-        knockback_slider.max = 10;
+        knockback_slider.max = 20;
 
         Tabs[0].AddItems(banner, mod_info, struggle_label, struggle_slider, knockback_label, knockback_slider);
     }
