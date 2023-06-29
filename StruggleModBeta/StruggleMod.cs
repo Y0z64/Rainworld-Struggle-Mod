@@ -16,7 +16,7 @@ using Debug = UnityEngine.Debug;
 
 namespace StruggleMod;
 
-[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.1")]
+[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.0.1")]
 public class StruggleMod : BaseUnityPlugin
 {
     private StruggleModOptions Options;
