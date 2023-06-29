@@ -16,9 +16,12 @@ using Debug = UnityEngine.Debug;
 
 namespace StruggleMod;
 
-[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.0.1")]
+[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.0.2")]
 public class StruggleMod : BaseUnityPlugin
 {
+    //modinfo
+    public static string version = "0.0.2"; // Must be the same as up here ^
+
     public StruggleModOptions Options;
 
     private int struggleValue = 0;
@@ -58,7 +61,7 @@ public class StruggleMod : BaseUnityPlugin
             }
             // TODO: Add debug Logs here if needed
             struggleValue = 0;
-            self.grabbedBy[0].grabber.Violence(null, Custom.DirVec(self.firstChunk.pos, self.grabbedBy[0].grabber.bodyChunks[0].pos) * 50f, self.grabbedBy[0].grabber.bodyChunks[0], null, Creature.DamageType.Blunt, 0.2f, 130f * Mathf.Lerp(self.grabbedBy[0].grabber.Template.baseStunResistance, 1f, 0.5f));
+            self.grabbedBy[0].grabber.Violence(null, (Custom.DirVec(self.firstChunk.pos, self.grabbedBy[0].grabber.bodyChunks[0].pos) * 10f) * StruggleModOptions.knockback_configurable.Value, self.grabbedBy[0].grabber.bodyChunks[0], null, Creature.DamageType.Blunt, 0.2f, 130f * Mathf.Lerp(self.grabbedBy[0].grabber.Template.baseStunResistance, 1f, 0.5f));
             self.grabbedBy[0].Release();
         }
     }   
