@@ -28,7 +28,7 @@ public class StruggleModOptions : OptionInterface
     {
         instance = this;
         struggle_configurable = config.Bind("struggle_slider", 25, new ConfigurableInfo("", null, ""));
-        knockback_configurable = config.Bind("knockback_slider", 5, new ConfigurableInfo("", null, ""));
+        knockback_configurable = config.Bind("knockback_slider", 1, new ConfigurableInfo("", null, ""));
     }
 
     public override void Initialize()
@@ -47,19 +47,18 @@ public class StruggleModOptions : OptionInterface
         texture.LoadImage(img_bytes);
 
         OpImage banner = new OpImage(new Vector2(0f,420f), texture);
-        OpLabel mod_info = new OpLabel(300f, 425f, "StruggleMod  -  By Y0z64  -  Version: " + StruggleMod.version, true);
-        mod_info.label.alignment = FLabelAlignment.Center;
+        OpLabel mod_info = new OpLabel(new Vector2(300f, 397f), new Vector2(1f, 1f), "StruggleMod  -  By Y0z64  -  Version: " + StruggleMod.version, FLabelAlignment.Center, false);
 
-        OpLabel struggle_label = new OpLabel(300f, 320f, "STRUGGLE INPUTS", true);
+        OpLabel struggle_label = new OpLabel(300f, 330f, "STRUGGLE INPUTS", true);
         struggle_label.label.alignment = FLabelAlignment.Center;
-        OpLabel knockback_label = new OpLabel(300f, 420f, "KNOCKBACK MULTIPLIER", true);
+        OpLabel knockback_label = new OpLabel(300f, 230f, "KNOCKBACK MULTIPLIER", true);
         knockback_label.label.alignment = FLabelAlignment.Center;
 
-        struggle_slider = new OpSlider(struggle_configurable, new Vector2(250f, 380f), 100){
+        struggle_slider = new OpSlider(struggle_configurable, new Vector2(150f, 300f), 3f){
             description = "Number of inputs before you break free."
         };
 
-        knockback_slider = new OpSliderTick(knockback_configurable, new Vector2(250f, 480f), 100){
+        knockback_slider = new OpSlider(knockback_configurable, new Vector2(150f, 200f), 3f){
             description = "Multiplier of how much knockback creatures recieve when you break free"
         };
 

@@ -16,11 +16,11 @@ using Debug = UnityEngine.Debug;
 
 namespace StruggleMod;
 
-[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.0.2")]
+[BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.9")]
 public class StruggleMod : BaseUnityPlugin
 {
     //modinfo
-    public static string version = "0.0.2"; // Must be the same as up here ^
+    public static string version = "0.9"; // Must be the same as up here ^
 
     public StruggleModOptions Options;
 
