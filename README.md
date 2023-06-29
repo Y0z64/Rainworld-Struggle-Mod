@@ -18,3 +18,8 @@ Alternative of HPbar's struggle without the extra mechanics
 **Feel free to report any bugs, requests or suggestions below.**
 
 [Steam workshop link](https://steamcommunity.com/sharedfiles/filedetails/?id=2996260050)
+
+## Building
+- Clone the repository
+- Update the reference paths in the .csproj file
+- Build with prefered IDE
