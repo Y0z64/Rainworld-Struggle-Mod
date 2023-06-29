@@ -19,7 +19,7 @@ namespace StruggleMod;
 [BepInPlugin("Y0z64.strugglemod", "Struggle Mod", "0.0.1")]
 public class StruggleMod : BaseUnityPlugin
 {
-    private StruggleModOptions Options;
+    public StruggleModOptions Options;
 
     private int struggleValue = 0;
     private void OnEnable()
@@ -50,13 +50,14 @@ public class StruggleMod : BaseUnityPlugin
         orig(self, eu);
         if(Input.anyKeyDown && self.grabbedBy.Count > 0 && !(self.grabbedBy[0].grabber is Player) && !self.dead)
         {
-            int releaseValue = 30; // TODO: Add here Option value
+            int releaseValue = StruggleModOptions.struggle_configurable.Value; // TODO: Add here Option value
             if(struggleValue < releaseValue)
             {
                 struggleValue++;
                 return;
             }
             // TODO: Add debug Logs here if needed
+            struggleValue = 0;
             self.grabbedBy[0].grabber.Violence(null, Custom.DirVec(self.firstChunk.pos, self.grabbedBy[0].grabber.bodyChunks[0].pos) * 50f, self.grabbedBy[0].grabber.bodyChunks[0], null, Creature.DamageType.Blunt, 0.2f, 130f * Mathf.Lerp(self.grabbedBy[0].grabber.Template.baseStunResistance, 1f, 0.5f));
             self.grabbedBy[0].Release();
         }
