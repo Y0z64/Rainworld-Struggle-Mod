@@ -28,7 +28,7 @@ public class StruggleMod : BaseUnityPlugin
         // Atempt to start Options screen
         try
         {
-            Options = new StruggleModOptions(this, Logger);
+            Options = new StruggleModOptions();
         }
         catch (Exception ex)
         {

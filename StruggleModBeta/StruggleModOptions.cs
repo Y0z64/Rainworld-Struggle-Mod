@@ -1,4 +1,3 @@
-using BepInEx.Logging;
 using Menu.Remix.MixedUI;
 using Menu.Remix.MixedUI.ValueTypes;
 using UnityEngine;
@@ -6,25 +5,25 @@ using UnityEngine;
 namespace StruggleMod;
 
 public class StruggleModOptions : OptionInterface
-{
-    private readonly ManualLogSource Logger;
+{  
+    //Initialize instance
+    public static StruggleModOptions instance;
     
     //initialize slider and config for struggle value
     private OpSlider struggle_slider;
 
     public static Configurable<int> struggle_configurable;
 
-    public StruggleModOptions(StruggleMod modInstance, ManualLogSource loggerSource)
+    public StruggleModOptions()
     {
-        Logger = loggerSource;
         instance = this;
         struggle_configurable = config.Bind("struggle_slider", 25, new ConfigurableInfo("", null, ""));
     }
 
     public override void Initialize()
     {
-        Logger.Log("Struggle Options menu initialize");
-        base.Ininialize();
+        Debug.Log("Struggle Options menu initialize");
+        base.Initialize();
         Tabs = new OpTab[1]
         {
             new OpTab(this, "Overview")
@@ -39,7 +38,7 @@ public class StruggleModOptions : OptionInterface
         struggle_slider.min = 0;
         struggle_slider.max = 100;
 
-        Tabs[0].AddItems(struggle_label, struggle_configurable);
+        Tabs[0].AddItems(struggle_label, struggle_slider);
     }
 
     public override void Update()
